@@ -29,10 +29,10 @@ exports.handler = async (event) => {
 
         switch (event.httpMethod) {
             case 'GET':
-                let params = {
+                const getParams = {
                     TableName: tableName
                 }
-                docClient.scan(params, (err, data) => {
+                docClient.scan(getParams, (err, data) => {
                     let items = [];
                     if (data.Items){
                         items = data.Items;
@@ -44,7 +44,7 @@ exports.handler = async (event) => {
             case 'POST':
                 const pageObject = JSON.parse(event.body);
 
-                let params = {
+                const postParams = {
                     TableName: tableName,
                     Item:{
                         'slug': classObject.slug,
@@ -59,7 +59,7 @@ exports.handler = async (event) => {
                     }
                 };
 
-                docClient.put(params, async (err, data) => {
+                docClient.put(postParams, async (err, data) => {
                     if (err) {
                         console.log("ERR: ", err);
                         done('Unable to create item. Error JSON: ' + JSON.stringify(err));
@@ -74,7 +74,7 @@ exports.handler = async (event) => {
             case 'DELETE':
                 const classSlug = event.pathParameters.classSlug;
 
-                let params = {
+                const deleteParams = {
                     Key: {
                         "slug": {
                             S: classSlug
@@ -82,7 +82,7 @@ exports.handler = async (event) => {
                     },
                     TableName: tableName
                 }
-                dynamo.deleteItem(params, async (err, res) => {
+                dynamo.deleteItem(deleteParams, async (err, res) => {
                     if (err){
                         done(err);
                     } else {
