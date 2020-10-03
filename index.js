@@ -29,7 +29,7 @@ exports.handler = async (event) => {
 
         switch (event.httpMethod) {
             case 'GET':
-                const params = {
+                let params = {
                     TableName: tableName
                 }
                 docClient.scan(params, (err, data) => {
@@ -44,7 +44,7 @@ exports.handler = async (event) => {
             case 'POST':
                 const pageObject = JSON.parse(event.body);
 
-                const params = {
+                let params = {
                     TableName: tableName,
                     Item:{
                         'slug': classObject.slug,
@@ -74,7 +74,7 @@ exports.handler = async (event) => {
             case 'DELETE':
                 const classSlug = event.pathParameters.classSlug;
 
-                const params = {
+                let params = {
                     Key: {
                         "slug": {
                             S: classSlug
