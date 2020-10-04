@@ -82,8 +82,10 @@ exports.handler = async (event) => {
                     },
                     TableName: tableName
                 }
+                console.log(deleteParams);
                 dynamo.deleteItem(deleteParams, async (err, res) => {
                     if (err){
+                        console.error(err);
                         done(err);
                     } else {
                         console.log(res);
