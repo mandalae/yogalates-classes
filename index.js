@@ -5,6 +5,21 @@ const docClient = new aws.DynamoDB.DocumentClient();
 
 const tableName = 'yogalates-classes';
 
+const apigateway = new aws.APIGateway();
+
+const clearCache = stageName => {
+    const params = {
+      restApiId: 'ul55ggh6oa',
+      stageName: stageName /* required */
+    };
+    return new Promise((resolve, reject) => {
+        apigateway.flushStageCache(params, function(err, data) {
+          if (err) reject(err); // an error occurred
+          else     resolve(data);           // successful response
+        });
+    });
+};
+
 exports.handler = async (event) => {
     return new Promise(async (resolve, reject) => {
         let response = {
