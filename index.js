@@ -42,7 +42,7 @@ exports.handler = async (event) => {
                 });
                 break;
             case 'POST':
-                const pageObject = JSON.parse(event.body);
+                const classObject = JSON.parse(event.body);
 
                 const postParams = {
                     TableName: tableName,
@@ -88,7 +88,9 @@ exports.handler = async (event) => {
                         console.error(err);
                         done(err);
                     } else {
-                        console.log(res);
+                        console.log('Result:', res);
+                        const clearCacheResult = await clearCache('Prod');
+                        console.log('Clear cache result:', clearCacheResult);
                         done(null, {success: true});
                     }
                 });
