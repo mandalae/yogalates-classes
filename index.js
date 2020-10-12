@@ -61,17 +61,7 @@ exports.handler = async (event) => {
 
                 const postParams = {
                     TableName: tableName,
-                    Item:{
-                        'slug': classObject.slug,
-                        'time': classObject.time,
-                        'text': classObject.text,
-                        'postCode': classObject.postCode,
-                        'name': classObject.name,
-                        'link': classObject.link,
-                        'city': classObject.city,
-                        'address1': classObject.address1,
-                        'address2': classObject.address2
-                    }
+                    Item: classObject
                 };
 
                 docClient.put(postParams, async (err, data) => {
